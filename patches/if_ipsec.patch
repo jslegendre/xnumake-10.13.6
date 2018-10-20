@@ -1,0 +1,18 @@
+--- a/src/xnu-4570.71.2/bsd/net/if_ipsec.c	2018-10-18 23:33:37.000000000 -0400
++++ b/src/xnu-4570.71.2/bsd/net/if_ipsec.c	2018-10-17 18:18:21.000000000 -0400
+@@ -370,6 +370,7 @@
+     return 1;
+ }
+ 
++#if IPSEC_NEXUS
+ boolean_t
+ ipsec_interface_needs_netagent(ifnet_t interface)
+ {
+@@ -387,6 +388,7 @@
+ 
+ 	return (pcb->ipsec_needs_netagent == true);
+ }
++#endif
+ 
+ static errno_t
+ ipsec_ifnet_set_attrs(ifnet_t ifp)
