@@ -17,7 +17,7 @@ sudo make sdk
 ```  
 Please note this will not patch xnu but you are free to use the included patches in your own on-going projects
 
-It is also not recommended to use this to repeatedly rebuild the kernel as both `make` and `make sdk` will overwrite any modifications made to the xnu source.  Building the kernel is done strictly as test to make sure everything worked.  You are encouraged to use XNU's included Makefile for continuous development like so:
+It is ***NOT*** recommended to use this to repeatedly rebuild the kernel as both `make` and `make sdk` will overwrite any modifications made to the xnu source.  Building the kernel is done strictly as test to make sure everything worked.  You are encouraged to use XNU's included Makefile for continuous development like so:
 
 ```
 path/to/xnu-src$ make SDKROOT=$(PWD)/MacOSX10.13-xnu.sdk [XNU_LOGCOLORS=y] ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=(RELEASE/DEVELOPMENT/DEBUG/etc)
