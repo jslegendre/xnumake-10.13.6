@@ -28,6 +28,32 @@ You are also welcome to install the XNU-SDK using `make install_sdk` and using t
 path/to/xnu-src$ make SDKROOT=macosx10.13-xnu [XNU_LOGCOLORS=y] ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=(RELEASE/DEVELOPMENT/DEBUG/etc)
 ```
 
+## Linking and Booting
+To boot into your custom kernel you must have SIP disabled. To do this, boot into recovery mode and in the terminal from there type:
+```
+csrutil disable
+```
+
+Now you can prelink your kernel and reboot with:
+```
+$ sudo mv /System/Library/Kernels/kernel /System/Library/Kernels/kernel.backup
+$ sudo cp /path/to/kernel /System/Library/Kernels/
+$ sude kextcache -invalidate /
+```
+
+You will see a flood of warning about missing symbols that look like 
+```
+kxld[com.apple.<kextname>]: In interface com.apple.kpi.private of __kernel__, couldn't find symbol <symbol>
+```
+
+This is to be expected as Apple does not export proprietary symbols. If prelink fails, you will see this message:
+```
+Failed to generate prelinked kernel.
+Child process /usr/sbin/kextcache[1574] exited with status 71.
+```
+
+Now reboot and verify the timestamp for your kernel with `uname -a`.
+
 ## Notes
 This does not have flags to configure or build `libsyscall` yet.  This feature is coming soon though!
 This was originally something I made for myself after trying out a few different XNU build scripts/Makefiles for older XNU versions so large chunks of this are copy/pasted/modified from those. Check them out if you want to add some features to your XNU build system!
