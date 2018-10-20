@@ -5,7 +5,7 @@ The problem with 4570.71.2 is that Apple did not include a vital function that m
 
 This build system also creates a local "XNU-specific" SDK so as to NOT modify your original SDK.  This was a major annoyance for me during testing so I opted to take this route instead. 
 
-### How to Build
+## How to Build
 To download all dependencies, make the SDK, patch the necessary XNU files, and build a release version of the kernel:
 ```
 sudo make
@@ -17,7 +17,8 @@ sudo make sdk
 ```  
 Please note this will not patch xnu but you are free to use the included patches in your own on-going projects
 
-It is ***NOT*** recommended to use this to repeatedly rebuild the kernel as both `make` and `make sdk` will overwrite any modifications made to the xnu source.  Building the kernel is done strictly as test to make sure everything worked.  You are encouraged to use XNU's included Makefile for continuous development like so:
+### Warning!
+***It is NOT recommended to use this for ongoing kernel development as both `make` and `make sdk` will overwrite any modifications made to the xnu source.  Building the kernel is done strictly as test to make sure the SDK works.***  You are encouraged to use `make` once and XNU's included Makefile from then on like so:
 
 ```
 path/to/xnu-src$ make SDKROOT=$(PWD)/MacOSX10.13-xnu.sdk [XNU_LOGCOLORS=y] ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=(RELEASE/DEVELOPMENT/DEBUG/etc)
@@ -27,7 +28,7 @@ You are also welcome to install the XNU-SDK using `make install_sdk` and using t
 path/to/xnu-src$ make SDKROOT=macosx10.13-xnu [XNU_LOGCOLORS=y] ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=(RELEASE/DEVELOPMENT/DEBUG/etc)
 ```
 
-### Notes
+## Notes
 This does not have flags to configure or build `libsyscall` yet.  This feature is coming soon though!
 This was originally something I made for myself after trying out a few different XNU build scripts/Makefiles for older XNU versions so large chunks of this are copy/pasted/modified from those. Check them out if you want to add some features to your XNU build system!
 
